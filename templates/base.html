@@ -1,0 +1,36 @@
+<!-- followed instruction from https://www.codementor.io/rogargon/simple-django-web-application-tutorial-du107rmn4 -->
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="{% static "style/base.css" %}" />
+<title>My Game Website</title>
+</head>
+
+<body style="background-color: #00b386">
+<div id="header">
+  {% block header %}
+  {% if user.username %}<p>User {{ user.username }} <a href="/logout/"><font face = "palatino">Sign out</font></a></p>
+  {% else %}<p><a href="/login/"><font face = "palatino">Sign in</font></a></p>{% endif %}
+  {% endblock %}
+</div>
+
+<div id="sidebar">
+  {% block sidebar %}<ul><li><a href="/"><font face = "palatino">Home</font></a></li></ul>{% endblock %}
+</div>
+
+<div id="content">
+  {% block content %}
+  {% if error_message %}<p><strong>{{ error_message}}</strong></p>{% endif %}
+  {% endblock %}
+</div>
+
+<div id="footer">
+  {% block footer %}{% endblock %}
+</div>
+
+</body>
+
+</html>

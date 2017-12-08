@@ -1,0 +1,53 @@
+<!-- followed instruction from https://www.codementor.io/rogargon/simple-django-web-application-tutorial-du107rmn4 -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+  {{ game.name }}
+  {% if user.username %}
+    {% if user == game.user %}
+      (<a href="{% url 'mygames:game_edit' game.id %}">edit</a>)
+    {% endif %}
+  {% endif %}
+</h1>
+
+<ul>
+  {% for review in game.gamereview_set.all %}
+    <li>
+      <p>{{ review.rating }} star{{ review.rating|pluralize }}</p>
+      <p>{{ review.comment }}</p>
+      <p>Created by {{ review.user }} on {{ review.date }}</p>
+      <p><a href="{% url 'mygames:review_vote' review.id 1%}"> Like</a> {{ review.vote_likes }}
+        <a href="{% url 'mygames:review_vote' review.id -1%}"> Dislike</a> {{review.vote_dislikes}}</p>
+    </li>
+  {% endfor %}
+</ul>
+
+{% if user.username %}
+<h3>Add review</h3>
+
+<form action="{% url 'mygames:review_create' game.id %}" method="post">
+  {% csrf_token %}
+
+  Message: <textarea name="comment" id="comment" rows="4"></textarea>
+  <p>Rating:</p>
+  <p>
+    {% for rate in RATING_CHOICES %}
+      <input type="radio" name="rating" id="rating{{ forloop.counter }}" value="{{ rate.0 }}" />
+      <label for="choice{{ forloop.counter }}">{{ rate.1 }} star{{rate.0|pluralize }}</label>
+      <br/>
+    {% endfor %}
+  </p>
+  <input type="submit" value="Review" />
+</form>
+{% else %} <h3>Sign in to add review</h3>
+{% endif %}
+
+{% endblock %}
+
+
+<!-- {% block footer %}
+
+Created by {{ game.user }} on {{ game.date }}
+
+{% endblock %} -->

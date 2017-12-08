@@ -1,0 +1,20 @@
+<!-- followed instruction from https://www.codementor.io/rogargon/simple-django-web-application-tutorial-du107rmn4 -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+  <font face = "palatino">Game List</font>
+  {% if user.is_superuser %}
+    (<a href="{% url 'mygames:game_create' %}"><font face = "palatino">Add</font></a>)
+  {% endif %} <br>
+</h1>
+<a href="{% url 'mygames:game_filter' %}"><font face = "palatino">Search</font></a>
+
+<ul>
+  {% for game in latest_game_list %}
+    <li><a href="{% url 'mygames:game_detail' game.id %}">
+    <font face = "palatino">{{ game.name }}</font></a></li>
+  {% empty %}<li>Sorry, no games registered yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

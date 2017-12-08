@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="get">
+         {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    {% for obj in filter.qs %}
+      <font face='palatino'>
+      <a href="{% url 'mygames:game_detail' obj.id %}">
+      {{ obj.name }}</a> {{obj.genre}} {{obj.tag1}} {{obj.tag2}} {{obj.tag3}} ${{obj.price}} </font> <br>
+    {% endfor %}
+{% endblock %}
