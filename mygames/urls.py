@@ -6,10 +6,13 @@
 from django.conf.urls import url
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, UpdateView
-from models import Game
+from models import Game, BookmarkGame
 from forms import GameForm
-from views import GameCreate, GameDetail, review, game_filter
+from views import GameCreate, GameDetail, review, game_filter, BookmarkView
 from updown.views import AddRatingFromModel
+
+from django.contrib.auth.decorators import login_required
+app_name = 'ajax'
 
 urlpatterns = [
 
@@ -52,6 +55,10 @@ urlpatterns = [
             'field_name': 'vote',
         },
     	name='review_vote'),
+
+    url(r'^games/(?P<pk>\d+)/bookmark/$',
+        login_required(BookmarkView.as_view(model=BookmarkGame)),
+        name='game_bookmark'),
 
     url(r'^games/search$', game_filter, name='game_filter')
 ]

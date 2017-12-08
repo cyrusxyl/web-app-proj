@@ -4,4 +4,5 @@ import models
 
 admin.site.register(models.Game)
 admin.site.register(models.GameReview)
+admin.site.register(models.BookmarkGame)
 # Register your models here.

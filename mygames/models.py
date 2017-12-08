@@ -45,3 +45,15 @@ class GameFilter(django_filters.FilterSet):
             'price':['lt','gt'],
             'date':['year__gt']
         }
+
+class BookmarkBase(models.Model):
+    class Meta:
+        abstract = True
+
+    user = models.ForeignKey(User, verbose_name="User")
+
+    def __str__(self):
+        return self.user.username
+
+class BookmarkGame(BookmarkBase):
+    obj = models.ForeignKey(Game, verbose_name="Game")
