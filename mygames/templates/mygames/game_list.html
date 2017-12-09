@@ -11,7 +11,7 @@
 <a href="{% url 'mygames:game_filter' %}"><font face = "palatino">Search</font></a>
 
 <ul>
-  {% for game in latest_game_list %}
+  {% for game in object_list %}
     <li><a href="{% url 'mygames:game_detail' game.id %}">
     <font face = "palatino">{{ game.name }}</font></a></li>
   {% empty %}<li>Sorry, no games registered yet.</li>

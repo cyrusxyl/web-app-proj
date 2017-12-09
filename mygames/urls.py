@@ -4,11 +4,12 @@
 """
 
 from django.conf.urls import url
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.views.generic import DetailView, ListView, UpdateView
-from models import Game, BookmarkGame
+from models import Game, GameBookmark
 from forms import GameForm
-from views import GameCreate, GameDetail, review, game_filter, BookmarkView
+from views import GameCreate, GameDetail, BookmarkList, review, game_filter, bookmark
 from updown.views import AddRatingFromModel
 
 from django.contrib.auth.decorators import login_required
@@ -19,8 +20,7 @@ urlpatterns = [
 # List latest 5 games: /mygames/
     url(r'^$',
         ListView.as_view(
-        	queryset=Game.objects.filter(date__lte=timezone.now()).order_by('date')[:5],
-        	context_object_name='latest_game_list',
+        	queryset=Game.objects.filter(date__lte=timezone.now()).order_by('date'),
         	template_name='mygames/game_list.html'),
         name='game_list'),
 
@@ -39,7 +39,8 @@ urlpatterns = [
         UpdateView.as_view(
         	model = Game,
         	template_name = 'mygames/form.html',
-        	form_class = GameForm),
+        	form_class = GameForm,
+            success_url='/'),
         name='game_edit'),
 
 # Create a game review, ex.: /mygames/games/1/reviews/create/
@@ -56,9 +57,13 @@ urlpatterns = [
         },
     	name='review_vote'),
 
+    url(r'^games/search$', game_filter, name='game_filter'),
+
     url(r'^games/(?P<pk>\d+)/bookmark/$',
-        login_required(BookmarkView.as_view(model=BookmarkGame)),
+        login_required(bookmark),
         name='game_bookmark'),
 
-    url(r'^games/search$', game_filter, name='game_filter')
+    url(r'^bookmarks/$',
+        BookmarkList.as_view(),
+        name='bookmarks'),
 ]

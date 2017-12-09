@@ -8,8 +8,17 @@
     {% if user == game.user %}
       (<a href="{% url 'mygames:game_edit' game.id %}">edit</a>)
     {% endif %}
+    <a href="{% url 'mygames:game_bookmark' game.id %}">Bookmark </a>
   {% endif %}
 </h1>
+
+<h2>
+  {{ game.genre }} {{ game.tag1 }} {{ game.tag2 }} {{ game.tag3 }}
+</h2>
+
+<p>
+  {{ game.description}}
+</p>
 
 <ul>
   {% for review in game.gamereview_set.all %}

@@ -12,6 +12,7 @@ class Game(models.Model):
     tag1 = models.TextField(blank=True, null=True)
     tag2 = models.TextField(blank=True, null=True)
     tag3 = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     price = models.DecimalField('USD', max_digits=8, decimal_places=2, blank=True, null=True)
     url = models.URLField(blank=True, null=True)
     user = models.ForeignKey(User, default=1)
@@ -46,14 +47,11 @@ class GameFilter(django_filters.FilterSet):
             'date':['year__gt']
         }
 
-class BookmarkBase(models.Model):
+class Bookmark(models.Model):
+    user = models.ForeignKey(User, default=1)
+
     class Meta:
         abstract = True
 
-    user = models.ForeignKey(User, verbose_name="User")
-
-    def __str__(self):
-        return self.user.username
-
-class BookmarkGame(BookmarkBase):
-    obj = models.ForeignKey(Game, verbose_name="Game")
+class GameBookmark(Bookmark):
+    game = models.ForeignKey(Game)
