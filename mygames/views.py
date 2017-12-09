@@ -34,7 +34,7 @@ class GameCreate(CreateView):
 class BookmarkList(ListView):
   # model = Game
   # context_object_name='latest_game_list',
-  template_name='mygames/game_list.html'
+  template_name='mygames/my_bookmarks.html'
 
   def get_queryset(self):
       bookmarks = GameBookmark.objects.filter(user=self.request.user)

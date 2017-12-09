@@ -2,13 +2,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+<font face='palatino'>
 <h1>
   {{ game.name }}
   {% if user.username %}
     {% if user == game.user %}
       (<a href="{% url 'mygames:game_edit' game.id %}">edit</a>)
     {% endif %}
-    <a href="{% url 'mygames:game_bookmark' game.id %}">Bookmark </a>
+    <a href="{% url 'mygames:game_bookmark' game.id %}">Add to favorite</a>
   {% endif %}
 </h1>
 
@@ -52,6 +53,7 @@
 {% else %} <h3>Sign in to add review</h3>
 {% endif %}
 
+</font>
 {% endblock %}
 
 

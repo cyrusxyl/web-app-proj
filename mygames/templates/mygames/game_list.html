@@ -2,19 +2,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+<font face = "palatino">
 <h1>
-  <font face = "palatino">Game List</font>
+  Game List
   {% if user.is_superuser %}
-    (<a href="{% url 'mygames:game_create' %}"><font face = "palatino">Add</font></a>)
+    (<a href="{% url 'mygames:game_create' %}">Add</a>)
   {% endif %} <br>
 </h1>
-<a href="{% url 'mygames:game_filter' %}"><font face = "palatino">Search</font></a>
-
+<a href="{% url 'mygames:game_filter' %}">Search</a>
+{% if user.username %}
+  <a href="{% url 'mygames:bookmarks' %}">My Favorites</a>
+{% endif %}
 <ul>
   {% for game in object_list %}
     <li><a href="{% url 'mygames:game_detail' game.id %}">
-    <font face = "palatino">{{ game.name }}</font></a></li>
+    {{ game.name }}</a></li>
   {% empty %}<li>Sorry, no games registered yet.</li>
   {% endfor %}
 </ul>
+</font>
 {% endblock %}

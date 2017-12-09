@@ -1,0 +1,15 @@
+<!-- followed instruction from https://www.codementor.io/rogargon/simple-django-web-application-tutorial-du107rmn4 -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+  <font face = "palatino">My Favorites List</font>
+</h1>
+<ul>
+  {% for game in object_list %}
+    <li><a href="{% url 'mygames:game_detail' game.id %}">
+    <font face = "palatino">{{ game.name }}</font></a></li>
+  {% empty %}<li><font face = "palatino">Sorry, no favorite registered yet.</font></li>
+  {% endfor %}
+</ul>
+{% endblock %}

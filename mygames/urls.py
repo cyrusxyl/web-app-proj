@@ -20,7 +20,7 @@ urlpatterns = [
 # List latest 5 games: /mygames/
     url(r'^$',
         ListView.as_view(
-        	queryset=Game.objects.filter(date__lte=timezone.now()).order_by('date'),
+        	queryset=Game.objects.filter(date__lte=timezone.now()).order_by('-date'),
         	template_name='mygames/game_list.html'),
         name='game_list'),
 
